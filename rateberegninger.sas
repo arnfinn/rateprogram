@@ -61,7 +61,7 @@ options locale=NB_NO;
 	data utvalgX;
 	set &Ratefil; /*HER MÅ DET AGGREGERTE RATEGRUNNLAGSSETTET SETTES INN */
 		RV=&RV_variabelnavn; /* Definerer RV som ratevariabel */
-	keep RV ermann aar alder komnr bydel;
+	keep RV ermann aar alder bohf;
 	&aldjust;
 	run;
 
@@ -69,37 +69,26 @@ options locale=NB_NO;
 
 	PROC SQL;
 	   CREATE TABLE utvalgx AS
-	   SELECT DISTINCT aar,KomNr,bydel,Alder,ErMann,(SUM(RV)) AS RV
+	   SELECT DISTINCT aar,bohf,Alder,ErMann,(SUM(RV)) AS RV
 	      FROM UTVALGX
-		  where aar in &Periode and Ermann in &kjonn and Alder &aldersspenn and 0<komnr<2031
-	      GROUP BY aar, KomNr, bydel, Alder, ErMann;	  
+		  where aar in &Periode and Ermann in &kjonn and Alder &aldersspenn and 0<bohf<25
+	      GROUP BY aar, bohf, Alder, ErMann;	  
 	QUIT;
 
-	data innb_aar;
-	set &innbyggerfil;
-	keep aar komnr bydel Ermann Alder innbyggere;
-	where aar in &Periode and Ermann in &kjonn and Alder &aldersspenn and 0<komnr<2031;
-	&aldjust; 
-	run;
-
-	PROC SQL;
-	   CREATE TABLE innb_aar AS 
-	   SELECT DISTINCT aar,KomNr, bydel, Alder,ErMann,(SUM(Innbyggere)) AS Innbyggere
-	      FROM innb_aar
-	      GROUP BY aar, KomNr, Alder, bydel, ErMann;
-	QUIT;
-
+	
 	PROC SQL;
 	 CREATE TABLE utvalgx AS
 	 SELECT *
-	 FROM innb_aar left join utvalgx
-	 ON utvalgx.komnr=innb_aar.komnr and utvalgx.bydel=innb_aar.bydel and utvalgx.aar=innb_aar.aar 
-		and utvalgx.ermann=innb_aar.ermann and utvalgx.alder=innb_aar.alder;
+	 FROM innb_aar_&sheet left join utvalgx
+	 ON utvalgx.bohf=innb_aar_&sheet..bohf and utvalgx.aar=innb_aar_&sheet..aar 
+		and utvalgx.ermann=innb_aar_&sheet..ermann and utvalgx.alder=innb_aar_&sheet..alder;
 	QUIT; 
 
+	/*
 	proc datasets nolist;
 	delete innb_aar;
 	run;
+	*/
 
 	/* Definere alderskategorier */
 
@@ -134,18 +123,13 @@ options locale=NB_NO;
 
 	data RV;
 	set RV;
-	keep aar alder ermann Innbyggere KomNr bydel rv alderny;
+	keep aar alder ermann Innbyggere bohf rv alderny;
 	format aar aar.;
 	run;
 
 	proc delete data=alderdef utvalgx;
 	run;
 
-	/*test 13/6-16*/
-	data RV;
-	set RV;
-	%Boomraader;
-	run;
 
 	/* beregne andeler */
 	proc sql;
@@ -167,9 +151,9 @@ options locale=NB_NO;
 	%include "\\tos-sastest-07\SKDE\rateprogram\Rateprogram_BoFormat.sas";*/
 	data RV;
 	set RV;
-/*	%Boomraader; test 13/6-16*/
 	where &boomraade;
 	rename alderny=alder_ny;
+	norge = 1;
 	run;
 %mend utvalgx;
 
