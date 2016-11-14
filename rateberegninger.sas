@@ -1165,7 +1165,7 @@ run;
 %include "&filbane.Stiler\Anno_logo_kilde_NPR_SSB.sas";
 
 /*ods graphics on;*/
-ODS Graphics ON /reset=All imagename="AA_&RV_variabelnavn._&bo" imagefmt=&bildeformat  border=off HEIGHT=&hoyde width=&bredde;
+ODS Graphics ON /reset=All imagename="&figurnavn" imagefmt=&bildeformat  border=off HEIGHT=&hoyde width=&bredde;
 ODS Listing style=stil_figur Image_dpi=300 GPATH=&lagring;
 title;
 proc sgplot data=&bo._aarsvar noborder noautolegend sganno=anno pad=(Bottom=5%);
