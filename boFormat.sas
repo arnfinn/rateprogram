@@ -81,6 +81,7 @@ Value BoHF_kort
 22='Telemark'
 23='Sørlandet'
 24='Utlandet/Svalbard'
+25='NORGE'
 99='Ukjent/ugyldig kommunenr';
 
 Value Bydel_Oslo
