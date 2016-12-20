@@ -89,6 +89,7 @@ else If BoHF in (6:8) then BoRHF=2;
 else If BoHF in (10:13) then BoRHF=3;
 else If BoHF in (14:23) then BoRHF=4;
 else if BOHF in (24) then BoRHF=24; 
+else If BoHF in (30) then BoRHF=4;
 else if BoHF in (99) then BoRHF=99;
 
 /*
