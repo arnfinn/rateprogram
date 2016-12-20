@@ -1,5 +1,5 @@
 
-%include "\\hn.helsenord.no\UNN-Avdelinger\SKDE.avd\Analyse\Data\SAS\Makroer\master\Boomraader.sas";
+%include "\\hn.helsenord.no\UNN-Avdelinger\SKDE.avd\Analyse\Data\SAS\rateprogram\eldre\boomraader.sas";
 
 %macro utvalgx;
 %let aarsvarfigur=1;
