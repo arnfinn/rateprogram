@@ -81,7 +81,7 @@ Value BoHF_kort
 22='Telemark'
 23='Sørlandet'
 24='Utlandet/Svalbard'
-25='NORGE'
+25='Norge'
 30='Indre Oslo'
 99='Ukjent/ugyldig kommunenr';
 
