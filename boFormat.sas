@@ -61,6 +61,31 @@ Value BoHF
 99='Ukjent/ugyldig kommunenr'
 8888='Norge';
 
+
+Value BoHF_IA
+1='Finnmark'
+2='UNN'
+3='Nordland'
+4='Helgeland '
+5='Nord-Trøndelag'
+6='St. Olavs'
+7='Møre og Romsdal'
+8='Førde'
+9='Bergen'
+10='Fonna'
+11='Stavanger'
+12='Østfold'
+13='Akershus'
+14='OUS'
+15='Innlandet'
+16='Vestre Viken'
+17='Vestfold'
+18='Telemark'
+19='Sørlandet'
+20='Indre Oslo'
+21='Norge'
+99='Ukjent/ugyldig kommunenr';
+
 Value BoHF_kort
 1='Finnmark'
 2='UNN'

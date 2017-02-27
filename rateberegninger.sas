@@ -1471,7 +1471,7 @@ where &Mine_Boomraader;
 hbarparm category=&bo response=RateSnitt / fillattrs=(color=CX95BDE6); 
 hbarparm category=&bo response=Snittrate / fillattrs=(color=CXC3C3C3);
 /*     Refline &Norge / axis=x lineattrs=(Thickness=.5 color=Black pattern=2) name="Ref1";*/
-			%if &Antall_aar>2 and &aarsobs=1 %then %do; scatter x=rate&år1 y=&Bo / markerattrs=(symbol=squarefilled color=black);%end;
+			%if &Antall_aar>1 and &aarsobs=1 %then %do; scatter x=rate&år1 y=&Bo / markerattrs=(symbol=squarefilled color=black);%end;
 			%if &Antall_aar>2 and &aarsobs=1 %then %do; scatter x=rate&år2 y=&Bo / markerattrs=(symbol=circlefilled color=black); %end;
 			%if &Antall_aar>3 and &aarsobs=1 %then %do; scatter x=rate&år3 y=&Bo / markerattrs=(symbol=trianglefilled color=black);%end;
 			%if &Antall_aar>4 and &aarsobs=1 %then %do; scatter x=rate&år4 y=&Bo / markerattrs=(symbol=Diamondfilled color=black);%end;
@@ -1482,7 +1482,7 @@ hbarparm category=&bo response=Snittrate / fillattrs=(color=CXC3C3C3);
      yaxis display=(noticks noline) label='Boområde/opptaksområde' labelattrs=(size=7 weight=bold) type=discrete discreteorder=data valueattrs=(size=7);
      xaxis display=(nolabel) offsetmin=0.02 &skala /*values=(0 to 7 by 1)*/ /*valuesformat=comma8.0*/ valueattrs=(size=7);
      inset (
-		%if &Antall_aar>2 and &aarsobs=1 %then %do;"(*ESC*){unicode'25a0'x}"="   &år1" %end;  
+		%if &Antall_aar>1 and &aarsobs=1 %then %do;"(*ESC*){unicode'25a0'x}"="   &år1" %end;  
 	 	%if &Antall_aar>2 and &aarsobs=1 %then %do;"(*ESC*){unicode'25cf'x}"="   &år2" %end;
 	 	%if &Antall_aar>3 and &aarsobs=1 %then %do;"(*ESC*){unicode'25b2'x}"="   &år3" %end;
 	 	%if &Antall_aar>4 and &aarsobs=1 %then %do;"(*ESC*){unicode'2666'x}"="   &år4" %end;
@@ -1491,7 +1491,6 @@ hbarparm category=&bo response=Snittrate / fillattrs=(color=CXC3C3C3);
         /*"(*ESC*){unicode'2212'x}(*ESC*){unicode'2212'x}"=" &SnittOmraade, snitt"*/) 
           / position=bottomright textattrs=(size=7);
 run;Title; ods listing close;
-
 %end;
 
 %mend lag_aarsvarfigur;
