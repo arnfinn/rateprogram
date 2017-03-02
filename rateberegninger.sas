@@ -144,7 +144,7 @@ options locale=NB_NO;
 	/*test 13/6-16*/
 	data RV;
 	set RV;
-	%Boomraader;
+	%Boomraader(indreOslo = 1);
 	if BOHF in (24,99) then BoRHF=.; /*kaster ut Utlandet og Svalbard*/
 	if BoRHF in (1:4) then Norge=1;
 format borhf borhf. bohf bohf_kort. boshhn boshhn. fylke fylke.  vertskommunehn vertskommuneHN. 
