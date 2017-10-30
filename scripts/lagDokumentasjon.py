@@ -3,7 +3,6 @@
 
 import sys
 import os
-import codecs
 
 def extractDoc(filename):
 
@@ -65,7 +64,7 @@ for i in listofMacros:
    
    if doc != "":
       index += "- [{0}]({0})\n".format(i.split(".")[0])
-      docFile = codecs.open(docFolder+i.split(".")[0]+".md", "w", "utf-8")
+      docFile = open(docFolder+i.split(".")[0]+".md", "w")
       docFile.write(heading + doc)
       docFile.close()
 
@@ -104,7 +103,7 @@ Alt som ligger mellom `/*!` og `*/` vil legges inn i `docs/minNyeMakro.md` av sc
 
 """
 
-indexFile = codecs.open(docFolder+"index.md", "w", "utf-8")
+indexFile = open(docFolder+"index.md", "w")
 indexFile.write(indexHeading+index)
 indexFile.close()
 
