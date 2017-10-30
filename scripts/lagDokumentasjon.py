@@ -71,7 +71,7 @@ for i in listofMacros:
       docFile.close()
 
       
-indexHeading = open(docfolder+"indexHead.md","r").readlines()
+indexHeading = open(docFolder+"indexHead.md","r").readlines()
 
 indexFile = open(docFolder+"index.md", "w")
 indexFile.write(indexHeading+index)
