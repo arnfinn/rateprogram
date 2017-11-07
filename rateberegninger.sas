@@ -2073,15 +2073,13 @@ by descending rateSnitt;
 run;
 
 
-%if %sysevalf(%superq(figurnavn)=,boolean) %then %let figurnavn = "AA_&RV_variabelnavn._&bo"; 
+%if %sysevalf(%superq(figurnavn)=,boolean) %then %let figurnavn = AA_&RV_variabelnavn._&bo; 
 
 
 %if &NorgeSoyle=0 %then %do;
-/*data &forbruksmal._&bo; set &bo._aarsvar; run;*/
-
 
 /*ods graphics on;*/
-ODS Graphics ON /reset=All imagename=&figurnavn imagefmt=&bildeformat  border=off HEIGHT=&hoyde width=&bredde;
+ODS Graphics ON /reset=All imagename="&figurnavn" imagefmt=&bildeformat  border=off HEIGHT=&hoyde width=&bredde;
 ODS Listing style=stil_figur Image_dpi=300 GPATH=&lagring;
 title;
 proc sgplot data=&bo._aarsvar noborder noautolegend sganno=anno pad=(Bottom=5%);
@@ -2126,7 +2124,7 @@ proc sort data=&bo._aarsvar;
 by descending rateSnitt;
 run;
 
-ODS Graphics ON /reset=All imagename=&figurnavn imagefmt=&bildeformat  border=off HEIGHT=&hoyde width=&bredde;
+ODS Graphics ON /reset=All imagename="&figurnavn" imagefmt=&bildeformat  border=off HEIGHT=&hoyde width=&bredde;
 ODS Listing style=stil_figur Image_dpi=300 GPATH=&lagring;
 title;
 proc sgplot data=&bo._aarsvar noborder noautolegend sganno=anno pad=(Bottom=5%);
@@ -2289,8 +2287,6 @@ by descending rateSnitt;
 run;
 
 %if &NorgeSoyle=0 %then %do;
-
-/*data &forbruksmal._&bo; set &bo._aarsvar; run;*/
 
 /*ods graphics on;*/
 ods listing style=stil_figur gpath="%sysfunc(getoption(work))";
@@ -2468,6 +2464,7 @@ run;Title; ods listing close;
 /*!
 Beskrivelse
 */
+    %if %sysevalf(%superq(datanavn)=,boolean) %then %let datanavn = &forbruksmal;
 	data &forbruksmal._&bo; set &bo._agg_rate; run;
 %mend lagre_dataNorge;
 
@@ -2476,28 +2473,28 @@ Beskrivelse
 /*!
 Beskrivelse
 */
+    %if %sysevalf(%superq(datanavn)=,boolean) %then %let datanavn = &forbruksmal;
 %if &Ut_sett=1 %then %do;
-	data &forbruksmal._S_&bo; set &bo._agg_rate; run;
+	data &datanavn._S_&bo; set &bo._agg_rate; run;
 %end;
 
 %else %do;
-	data &forbruksmal._&bo; set &bo._aarsvar; drop aar rv_just_rate_sum; run;
+	data &datanavn._&bo; set &bo._aarsvar; drop aar rv_just_rate_sum; run;
 %end;
 
 %mend lagre_dataN;
-
 
 %macro lagre_dataHN;
 /*!
 Beskrivelse
 */
-
+    %if %sysevalf(%superq(datanavn)=,boolean) %then %let datanavn = &forbruksmal;
 %if &Ut_sett=1 %then %do;
-	data &forbruksmal._S_&bo._HN; set &bo._agg_rate; run;
+	data &datanavn._S_&bo._HN; set &bo._agg_rate; run;
 %end;
 
 %else %do;
-	data &forbruksmal._&bo._HN; set &bo._aarsvar; drop aar rv_just_rate_sum; run;
+	data &datanavn._&bo._HN; set &bo._aarsvar; drop aar rv_just_rate_sum; run;
 %end;
 
 %mend lagre_dataHN;
