@@ -3,26 +3,37 @@
 
 import sys
 import os
+import codecs
+import warnings
+import errno
+
 
 def extractDoc(filename):
 
    # Extract text in file that are
    # between /*! and */
    
-   macroFile = open(filename, "r")
-   macroFileContent = macroFile.readlines()
-   macroFile.close()
+    macroFile = open(filename, "r")
+    macroFileContent = macroFile.readlines()
+    macroFile.close()
 
-   doc = ""
-   extract = False
-   for i in macroFileContent:
-      if extract and "*/" in i:
-         extract = False
-      if extract:
-         doc += i
-      if "/*!" in i:
-         extract = True
-   return(doc)
+    doc = ""
+    extract = False
+    for i in macroFileContent:
+        if len(i.split()) == 2:
+            if i.split()[0] == "%macro":
+                print(i)
+                doc += '''
+# Makro {0}
+
+'''.format(i.split()[1])
+        if extract and "*/" in i:
+            extract = False
+        if extract:
+            doc += i
+        if "/*!" in i:
+            extract = True
+    return(doc)
 
 def findSASfiles(folder):
    SASfiles = []
@@ -41,26 +52,33 @@ def findSASfiles(folder):
 
    return(SASfiles)
 
-#def deleteMD(folder):
-#   for fn in os.listdir(folder):
-#      if fn.endswith(".md"):
-#         os.remove(folder+fn)
-
 folder = "./"
 listofMacros = findSASfiles(folder)
 print(listofMacros)
 
 docFolder = "./docs/"
 
-#deleteMD(docFolder)
+try:
+    os.makedirs(docFolder)
+except OSError as e:
+    if e.errno != errno.EEXIST:
+        raise
 
 index = ""
 for i in listofMacros:
    heading = '''[Ta meg tilbake.](./)
 
-# {0}
+# Oversikt over makroene i `{0}`
 
-'''.format(i.split(".")[0])
+'''.format(i)
+
+   heading += '''
+# Innholdsfortegnelse
+{: .no_toc}
+
+* auto-gen TOC:
+{:toc}
+'''
 
    doc = extractDoc(folder + i)
    
@@ -72,7 +90,7 @@ for i in listofMacros:
 
       
 indexHeading = ""
-for i in open(docFolder+"indexHead.md","r").readlines():
+for i in open("./doc/indexHead.md","r").readlines():
    indexHeading += i
 
 indexFile = open(docFolder+"index.md", "w")
