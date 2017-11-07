@@ -13,7 +13,7 @@ def extractDoc(filename):
    # Extract text in file that are
    # between /*! and */
    
-    macroFile = open(filename, "r")
+    macroFile = codecs.open(filename, "r", "latin-1")
     macroFileContent = macroFile.readlines()
     macroFile.close()
 
@@ -84,10 +84,11 @@ for i in listofMacros:
    
    if doc != "":
       index += "- [{0}]({0})\n".format(i.split(".")[0])
-      docFile = open(docFolder+i.split(".")[0]+".md", "w")
+      docFile = codecs.open(docFolder+i.split(".")[0]+".md", "w", "utf-8")
       docFile.write(heading + doc)
       docFile.close()
-
+   else:
+      warnings.warn("ADVARSEL: Filen {0} er ikke dokumentert!".format(i))
       
 indexHeading = ""
 for i in open("./doc/indexHead.md","r").readlines():
