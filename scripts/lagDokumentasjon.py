@@ -91,7 +91,7 @@ for i in listofMacros:
       warnings.warn("ADVARSEL: Filen {0} er ikke dokumentert!".format(i))
       
 indexHeading = ""
-for i in open("./doc/indexHead.md","r").readlines():
+for i in open("./docs/indexHead.md","r").readlines():
    indexHeading += i
 
 indexFile = open(docFolder+"index.md", "w")
